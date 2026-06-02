@@ -47,4 +47,4 @@ pod install
 open "Photo Map.xcworkspace"
 ```
 
-Add your Foursquare `CLIENT_ID` and `CLIENT_SECRET` to `LocationsViewController.swift`. Run on a physical device for camera and GPS; the Simulator will fall back to the photo library.
+Set `FOURSQUARE_CLIENT_ID` and `FOURSQUARE_CLIENT_SECRET` in the run scheme environment. Run on a physical device for camera and GPS; the Simulator will fall back to the photo library.

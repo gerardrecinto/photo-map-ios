@@ -15,9 +15,8 @@ protocol LocationsViewControllerDelegate : AnyObject {
 class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
   weak var delegate : LocationsViewControllerDelegate!
 
-    // TODO: Fill in actual CLIENT_ID and CLIENT_SECRET
-    let CLIENT_ID = "REMOVED_PUBLIC_CREDENTIAL"
-    let CLIENT_SECRET = "REMOVED_PUBLIC_CREDENTIAL"
+    let CLIENT_ID = ProcessInfo.processInfo.environment["FOURSQUARE_CLIENT_ID"] ?? ""
+    let CLIENT_SECRET = ProcessInfo.processInfo.environment["FOURSQUARE_CLIENT_SECRET"] ?? ""
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -75,6 +74,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func fetchLocations(_ query: String, near: String = "San Francisco") {
         let baseUrlString = "https://api.foursquare.com/v2/venues/search?"
+        guard !CLIENT_ID.isEmpty, !CLIENT_SECRET.isEmpty else { return }
         let queryString = "client_id=\(CLIENT_ID)&client_secret=\(CLIENT_SECRET)&v=20141020&near=\(near),CA&query=\(query)"
 
         let url = URL(string: baseUrlString + queryString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
